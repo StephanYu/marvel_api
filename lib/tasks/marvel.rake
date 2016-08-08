@@ -3,16 +3,14 @@ require 'open-uri'
 
 namespace :marvel do 
 
-  desc "Make request to the marvel api for all comics"
-  task :get_comics do 
+  def get_comics
     set_variables
     url = "http://gateway.marvel.com:80/v1/public/comics?ts=#{@time_stamp}&apikey=#{@public_key}&hash=#{@hash}"
     response = send_request(url)
     response["data"]["results"]
   end
 
-  desc "Make request to the marvel api for all characters"
-  task :get_characters do 
+  def get_characters
     set_variables
     url = "https://gateway.marvel.com:443/v1/public/characters\?ts=#{@time_stamp}&apikey=#{@public_key}&hash=#{@hash}"
     response = send_request(url)
@@ -20,45 +18,41 @@ namespace :marvel do
   end
 
   desc "Save each comic to the db and save its thumbnail image to the public/images folder as id_thumb.jpg"
-  task :save_comics do 
+  task :save_comics => :environment do 
     @comics = get_comics
-
     @comics.each do |comic|
       id = comic["id"]
       image_url = comic["thumbnail"]["path"]
-      download = open(image_url)
-      IO.copy_stream(download, "/images/#{id}_thumb.jpg")
-
-      Comic.find_or_create_by(title: comic["title"], image_url: "/images/#{id}_thumb.jpg")
+      download = open("#{image_url}.#{comic["thumbnail"]['extension']}")
+      IO.copy_stream(download, Rails.root.join("public","images/#{id}_thumb.jpg"))
+      
+      if Comic.exists?(marvel_comic_id: id)
+        Comic.update_attributes(title: comic["title"], image_url: "/images/#{id}_thumb.jpg")
+      else
+        Comic.find_or_create_by(title: comic["title"], image_url: "/images/#{id}_thumb.jpg", marvel_comic_id: id)
+      end
     end
   end
 
   desc "Save each comic character to the db"
-  task :save_characters do 
+  task :save_characters => :environment do 
     @characters = get_characters
 
     @characters.each do |character|
-      Character.find_or_create_by(name: character["name"])
+      comic_ids = character['comics']['items'].map do |comic|
+        Comic.find_by(marvel_comic_id: comic['resourceURI'][/\/(\d+)\z/, 1].to_i).try(:id)
+      end.compact
+
+      if Character.exists?(name: character["name"])
+        Character.update_attributes(name: character["name"]) do |character|
+          character.comic_ids = comic_ids
+        end
+      else 
+        Character.find_or_create_by(name: character["name"]) do |character|
+          character.comic_ids = comic_ids
+        end
+      end
     end
-  end
-
-  desc "Check Marvel API for any updates in comics collections"
-  task :check_and_update_comics do 
-    @comics = get_comics
-    # if the last comic entry differs from the one in the local db, then 
-  end
-
-  desc "Check Marvel API for any updates in characters collections"
-  task :check_and_update_characters do 
-    @characters = get_characters
-  end
-
-  def get_comics
-    Rake::Task["marvel:get_comics"].invoke
-  end
-
-  def get_characters
-    Rake::Task["marvel:get_characters"].invoke
   end
 
   def create_md5(ts, priv_key, pub_key)
@@ -73,6 +67,6 @@ namespace :marvel do
     private_key  = ENV["private_key_marvel"]
     @public_key  = ENV["public_key_marvel"]
     @time_stamp  = Time.now.to_i
-    @hash = create_md5(@time_stamp.to_s + private_key + @public_key)
+    @hash = create_md5(@time_stamp.to_s, private_key, @public_key)
   end
 end

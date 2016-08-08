@@ -6,8 +6,8 @@ gem 'puma', '~> 3.0'
 gem 'rack-cors'
 gem 'figaro'
 gem 'httparty'
-# gem 'redis', '~> 3.0'
-# gem 'sidekiq'
+gem 'redis', '~> 3.0'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'byebug', platform: :mri

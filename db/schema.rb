@@ -14,8 +14,9 @@ ActiveRecord::Schema.define(version: 20160807153951) do
 
   create_table "characters", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "marvel_character_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "characters_comics", id: false, force: :cascade do |t|
@@ -28,16 +29,11 @@ ActiveRecord::Schema.define(version: 20160807153951) do
   create_table "comics", force: :cascade do |t|
     t.string   "title"
     t.string   "image_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "votes", force: :cascade do |t|
-    t.integer  "comic_id"
-    t.integer  "direction"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["comic_id"], name: "index_votes_on_comic_id"
+    t.integer  "marvel_comic_id"
+    t.integer  "upvote",          default: 0, null: false
+    t.integer  "downvote",        default: 0, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
 end

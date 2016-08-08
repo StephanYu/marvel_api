@@ -3,6 +3,9 @@ class CreateComics < ActiveRecord::Migration[5.0]
     create_table :comics do |t|
       t.string :title
       t.string :image_url
+      t.integer :marvel_comic_id
+      t.integer :upvote, default: 0, null: false
+      t.integer :downvote, default: 0, null: false
 
       t.timestamps
     end

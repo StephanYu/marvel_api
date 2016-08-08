@@ -38,6 +38,19 @@ class ComicsController < ApplicationController
     @comic.destroy
   end
 
+  def toggle
+    @comic = Comic.find(params[:id])
+
+    case params[:comic][:vote_type]
+    when 'upvote' 
+      @comic.increment!(:upvote)
+    when 'downvote'
+      @comic.increment!(:downvote)
+    end
+
+    render json: @comic
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comic
