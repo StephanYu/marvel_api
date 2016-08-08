@@ -3,20 +3,6 @@ require 'open-uri'
 
 namespace :marvel do 
 
-  def get_comics
-    set_variables
-    url = "http://gateway.marvel.com:80/v1/public/comics?ts=#{@time_stamp}&apikey=#{@public_key}&hash=#{@hash}"
-    response = send_request(url)
-    response["data"]["results"]
-  end
-
-  def get_characters
-    set_variables
-    url = "https://gateway.marvel.com:443/v1/public/characters\?ts=#{@time_stamp}&apikey=#{@public_key}&hash=#{@hash}"
-    response = send_request(url)
-    response["data"]["results"]
-  end
-
   desc "Save each comic to the db and save its thumbnail image to the public/images folder as id_thumb.jpg"
   task :save_comics => :environment do 
     @comics = get_comics
@@ -53,6 +39,20 @@ namespace :marvel do
         end
       end
     end
+  end
+
+  def get_comics
+    set_variables
+    url = "http://gateway.marvel.com:80/v1/public/comics?ts=#{@time_stamp}&apikey=#{@public_key}&hash=#{@hash}"
+    response = send_request(url)
+    response["data"]["results"]
+  end
+
+  def get_characters
+    set_variables
+    url = "https://gateway.marvel.com:443/v1/public/characters\?ts=#{@time_stamp}&apikey=#{@public_key}&hash=#{@hash}"
+    response = send_request(url)
+    response["data"]["results"]
   end
 
   def create_md5(ts, priv_key, pub_key)
