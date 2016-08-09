@@ -6,8 +6,9 @@ gem 'puma', '~> 3.0'
 gem 'rack-cors'
 gem 'figaro'
 gem 'httparty'
-gem 'redis', '~> 3.0'
 gem 'sidekiq'
+gem 'whenever', :require => false
+# gem 'redis', '~> 3.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
