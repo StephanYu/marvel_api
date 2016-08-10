@@ -19,8 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-# every 1.day, :at => '12:00 am' do
-#   runner "UpdateDatabase.perform"
-#   rake "marvel:save_comics"
-#   rake "marvel:save_characters"
-# end
+every 1.day, :at => '12:00 am' do
+  runner "UpdateDatabase.perform"
+end

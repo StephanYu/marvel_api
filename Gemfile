@@ -11,7 +11,7 @@ gem 'whenever', :require => false
 # gem 'redis', '~> 3.0'
 
 group :development, :test do
-  gem 'byebug', platform: :mri
+  gem 'pry-byebug'
   gem 'rspec-rails', '3.1.0'
   gem 'factory_girl_rails'
 end

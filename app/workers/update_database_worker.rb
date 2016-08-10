@@ -2,6 +2,7 @@ class UpdateDatabaseWorker
   include Sidekiq::Worker
 
   def perform
-    # update comics and characters 
+    Rake::Task['marvel:save_comics'].invoke
+    Rake::Task['marvel:save_characters'].invoke
   end
 end

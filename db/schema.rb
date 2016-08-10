@@ -28,7 +28,9 @@ ActiveRecord::Schema.define(version: 20160807153951) do
 
   create_table "comics", force: :cascade do |t|
     t.string   "title"
+    t.string   "description"
     t.string   "image_url"
+    t.string   "thumbnail_url"
     t.integer  "marvel_comic_id"
     t.integer  "upvote",          default: 0, null: false
     t.integer  "downvote",        default: 0, null: false
