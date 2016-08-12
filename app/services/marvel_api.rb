@@ -12,7 +12,17 @@ class MarvelApi
   end
 
   def get_comics
-    url = "http://gateway.marvel.com:80/v1/public/comics?ts=#{time_stamp}&apikey=#{public_key}&hash=#{hash}"
+    # make initial request to obtain meta data with limit 1
+      # extract data(total, limit)
+      # results_per_page = ["data"]["limit"]
+      # total_comics = ["data"]["total"]
+      # total_page_count = total_comics / results_per_page # rounded up
+      # results = []
+
+    # iterate for total_page_count
+      # make get request and save data to array? with every request changing the offset variable offset = results_per_page * counter(0..total_page_count)
+      #  
+    url = "http://gateway.marvel.com:80/v1/public/comics?ts=#{time_stamp}&offset=#{offset}&apikey=#{public_key}&hash=#{hash}"
     response = send_request(url)
     response["data"]["results"]
   end
