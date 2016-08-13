@@ -12,19 +12,23 @@ class MarvelApi
   end
 
   def get_comics
-    # make initial request to obtain meta data with limit 1
-      # extract data(total, limit)
-      # results_per_page = ["data"]["limit"]
-      # total_comics = ["data"]["total"]
-      # total_page_count = total_comics / results_per_page # rounded up
-      # results = []
+    data = get_metadata_for_comics
+    
+    results_per_page = data["limit"].to_f
+    total_comics = data["total"]
+    total_page_count = (total_comics/results_per_page).ceil
+    results = []
 
+    (0..total_page_count)
     # iterate for total_page_count
-      # make get request and save data to array? with every request changing the offset variable offset = results_per_page * counter(0..total_page_count)
+      # make get request and save data to array? with every request changing the variable offset = results_per_page * counter(0..total_page_count)
       #  
+    offset = results_per_page * counter
     url = "http://gateway.marvel.com:80/v1/public/comics?ts=#{time_stamp}&offset=#{offset}&apikey=#{public_key}&hash=#{hash}"
     response = send_request(url)
-    response["data"]["results"]
+    results << response["data"]["results"]
+    # merge results into one array
+    results.compact #??
   end
 
   def get_characters
@@ -57,5 +61,11 @@ class MarvelApi
 
     def send_request(url)
       HTTParty.get(url).parsed_response
+    end
+
+    def get_metadata_for_comics
+      url = "http://gateway.marvel.com:80/v1/public/comics?ts=#{time_stamp}&limit=1&apikey=#{public_key}&hash=#{hash}"
+      response = send_request(url)
+      response["data"]
     end
 end

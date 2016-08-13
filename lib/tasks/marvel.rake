@@ -3,7 +3,7 @@ require 'open-uri'
 
 namespace :marvel do 
 
-  desc "Save comics to the db and images to the public/images folder"
+  desc "Save comics to the db and images to the public folder"
   task :save_comics => :environment do 
     marvel = MarvelApi.new
     comics = marvel.get_comics
