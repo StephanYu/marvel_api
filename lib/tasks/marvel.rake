@@ -1,13 +1,10 @@
-require 'httparty'
-require 'open-uri'
-
 namespace :marvel do 
 
   desc "Save comics to the db and images to the public folder"
   task :save_comics => :environment do 
     marvel = MarvelApi.new
-    comics = marvel.get_comics
-
+    comics = marvel.fetch :comics
+    binding.pry
     comics.each do |comic|
       id = comic["id"]
 
@@ -24,7 +21,7 @@ namespace :marvel do
   desc "Save each comic character to the db"
   task :save_characters => :environment do 
     marvel     = MarvelApi.new
-    characters = marvel.get_characters
+    characters = marvel.fetch :characters
 
     characters.each do |character|
       id        = character["id"]

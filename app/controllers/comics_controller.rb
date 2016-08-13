@@ -13,16 +13,6 @@ class ComicsController < ApplicationController
     render json: @comic
   end
 
-  # POST /comics
-  def create
-    @comic = Comic.new(comic_params)
-
-    if @comic.save
-      render json: @comic, status: :created, location: @comic
-    else
-      render json: @comic.errors, status: :unprocessable_entity
-    end
-  end
 
   # PATCH/PUT /comics/1
   def update
@@ -33,10 +23,6 @@ class ComicsController < ApplicationController
     end
   end
 
-  # DELETE /comics/1
-  def destroy
-    @comic.destroy
-  end
 
   def toggle
     @comic = Comic.find(params[:id])

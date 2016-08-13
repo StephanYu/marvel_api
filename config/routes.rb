@@ -4,6 +4,4 @@ Rails.application.routes.draw do
       put 'toggle'
     end
   end
-
-  resources :characters
 end
