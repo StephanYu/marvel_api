@@ -3,5 +3,9 @@ Rails.application.routes.draw do
     member do
       put 'toggle'
     end
+
+    collection do 
+      get 'search', to: 'comics#search'
+    end
   end
 end

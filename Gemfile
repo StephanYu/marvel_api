@@ -14,6 +14,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rspec-rails', '3.1.0'
   gem 'factory_girl_rails'
+  gem 'vcr', '3.0.3'
 end
 
 group :development do

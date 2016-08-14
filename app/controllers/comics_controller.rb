@@ -3,11 +3,19 @@ class ComicsController < ApplicationController
 
   # GET /comics
   def index
-    @comics = Comic.all
-
+    @comics = Comic.all.order('created_at DESC')
+  
     render json: @comics
   end
 
+  def search 
+    if params[:search].nil?
+      @comics = []
+    else
+      @comics = Comic.search(params[:search]).order("created_at DESC")
+    end
+  end
+  
   # GET /comics/1
   def show
     render json: @comic
