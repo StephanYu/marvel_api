@@ -1,8 +1,10 @@
 require "rails_helper"
 
 describe ImportCharactersService do 
+  
   shared_examples_for "an action to save characters in the database" do
     before { ImportCharactersService.new.import }
+    
     it "persists the character from the response into the database" do
       expect(character.name).to eq(characters_response.first["name"])
       expect(character.marvel_character_id).to eq(characters_response.first["id"])
@@ -10,22 +12,27 @@ describe ImportCharactersService do
         to eq comics.map(&:marvel_comic_id).sort
     end
   end
+
   describe "#import" do 
     let(:characters_response) do
-      [{"id"=>1011334,
-     "name"=>"3-D Man",
-     "description"=>"",
-     "thumbnail"=>{"path"=>"http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784", "extension"=>"jpg"},
-     "resourceURI"=>"http://gateway.marvel.com/v1/public/characters/1011334",
-     "comics"=>
-      {
-       "items"=>
-        [{"resourceURI"=>"http://gateway.marvel.com/v1/public/comics/21366", "name"=>"Avengers: The Initiative (2007) #14"},
-         {"resourceURI"=>"http://gateway.marvel.com/v1/public/comics/24571", "name"=>"Avengers: The Initiative (2007) #14 (SPOTLIGHT VARIANT)"},
-         {"resourceURI"=>"http://gateway.marvel.com/v1/public/comics/21546", "name"=>"Avengers: The Initiative (2007) #15"}
-         ]
-      }
-     }]
+      [
+        { "id"=>1011334,
+          "name"=>"3-D Man",
+          "description"=>"",
+          "thumbnail"=>{
+              "path"=>"http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784", 
+              "extension"=>"jpg"
+          },
+          "resourceURI"=>"http://gateway.marvel.com/v1/public/characters/1011334",
+          "comics"=>{
+            "items"=>[
+              {"resourceURI"=>"http://gateway.marvel.com/v1/public/comics/21366", "name"=>"Avengers: The Initiative (2007) #14"},
+              {"resourceURI"=>"http://gateway.marvel.com/v1/public/comics/24571", "name"=>"Avengers: The Initiative (2007) #14 (SPOTLIGHT VARIANT)"},
+              {"resourceURI"=>"http://gateway.marvel.com/v1/public/comics/21546", "name"=>"Avengers: The Initiative (2007) #15"}
+            ]
+          }
+        }
+      ]
     end
 
     let(:character) { Character.last }
@@ -48,6 +55,7 @@ describe ImportCharactersService do
       before do
         FactoryGirl.create(:character, marvel_character_id: characters_response.first["id"])
       end
+      
       it "does not create a new character entry" do 
         expect { ImportCharactersService.new.import }.
           not_to change { Character.count }
@@ -57,8 +65,6 @@ describe ImportCharactersService do
     end
 
     context "character not yet existent in database" do
-
-
       it "creates a new character entry" do 
         expect { ImportCharactersService.new.import }.
           to change { Character.count }.by(1)

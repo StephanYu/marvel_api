@@ -8,7 +8,7 @@ class MarvelApiService
     @private_key  = ENV["private_key_marvel"]
     @public_key   = ENV["public_key_marvel"]
     @time_stamp   = Time.now.to_i
-    @hash         = create_md5(@time_stamp.to_s, private_key, @public_key)
+    @hash         = create_md5(@time_stamp.to_s, @private_key, @public_key)
   end
 
   def fetch_comics
