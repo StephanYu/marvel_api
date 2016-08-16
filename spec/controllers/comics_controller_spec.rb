@@ -18,53 +18,15 @@ RSpec.describe ComicsController, :type => :controller do
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested comic as @comic" do
-      comic = Comic.create! valid_attributes
-      get :edit, {:id => comic.to_param}, valid_session
-      expect(assigns(:comic)).to eq(comic)
-    end
+  describe "POST search" do 
+    it "assigns all found comics as @comics"
+    it "returns an empty array when nothing is searched"
+    it "returns all comics ordered by the created_at date"
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested comic" do
-        comic = Comic.create! valid_attributes
-        put :update, {:id => comic.to_param, :comic => new_attributes}, valid_session
-        comic.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "assigns the requested comic as @comic" do
-        comic = Comic.create! valid_attributes
-        put :update, {:id => comic.to_param, :comic => valid_attributes}, valid_session
-        expect(assigns(:comic)).to eq(comic)
-      end
-
-      it "redirects to the comic" do
-        comic = Comic.create! valid_attributes
-        put :update, {:id => comic.to_param, :comic => valid_attributes}, valid_session
-        expect(response).to redirect_to(comic)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the comic as @comic" do
-        comic = Comic.create! valid_attributes
-        put :update, {:id => comic.to_param, :comic => invalid_attributes}, valid_session
-        expect(assigns(:comic)).to eq(comic)
-      end
-
-      it "re-renders the 'edit' template" do
-        comic = Comic.create! valid_attributes
-        put :update, {:id => comic.to_param, :comic => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
+  describe "POST toggle" do 
+    it "increments the upvote attribute when upvoted"
+    it "increments the downvote attribute when downvoted"
   end
 
 end

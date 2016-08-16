@@ -135,6 +135,8 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
+    shoulda-matchers (3.1.1)
+      activesupport (>= 4.0.0)
     sidekiq (4.1.2)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
@@ -176,6 +178,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.0.0)
   rspec-rails (= 3.1.0)
+  shoulda-matchers (~> 3.1)
   sidekiq
   spring
   spring-watcher-listen (~> 2.0.0)

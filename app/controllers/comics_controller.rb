@@ -1,11 +1,14 @@
 class ComicsController < ApplicationController
-  before_action :set_comic, only: [:show, :update, :destroy]
+  before_action :set_comic, only: [:show, :toggle, :update]
 
-  # GET /comics
   def index
     @comics = Comic.all.order('created_at DESC')
   
     render json: @comics
+  end
+
+  def show
+    render json: @comic
   end
 
   def search 
@@ -14,27 +17,11 @@ class ComicsController < ApplicationController
     else
       @comics = Comic.search(params[:search]).order("created_at DESC")
     end
-  end
-  
-  # GET /comics/1
-  def show
-    render json: @comic
-  end
 
-
-  # PATCH/PUT /comics/1
-  def update
-    if @comic.update(comic_params)
-      render json: @comic
-    else
-      render json: @comic.errors, status: :unprocessable_entity
-    end
+    render json: @comics
   end
-
 
   def toggle
-    @comic = Comic.find(params[:id])
-
     case params[:comic][:vote_type]
     when 'upvote' 
       @comic.increment!(:upvote)
@@ -46,12 +33,10 @@ class ComicsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_comic
       @comic = Comic.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def comic_params
       params.require(:comic).permit(:title, :image_url)
     end
