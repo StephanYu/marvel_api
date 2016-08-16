@@ -18,12 +18,6 @@ describe ImportCharactersService do
       [
         { "id"=>1011334,
           "name"=>"3-D Man",
-          "description"=>"",
-          "thumbnail"=>{
-              "path"=>"http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784", 
-              "extension"=>"jpg"
-          },
-          "resourceURI"=>"http://gateway.marvel.com/v1/public/characters/1011334",
           "comics"=>{
             "items"=>[
               {"resourceURI"=>"http://gateway.marvel.com/v1/public/comics/21366", "name"=>"Avengers: The Initiative (2007) #14"},
