@@ -12,7 +12,7 @@ gem 'whenever', :require => false
 
 group :development, :test do
   gem 'pry-byebug'
-  gem 'rspec-rails', '3.1.0'
+  gem 'rspec-rails', '3.5.1'
   gem 'factory_girl_rails'
   gem 'vcr', '3.0.3'
 end
@@ -25,6 +25,7 @@ end
 
 group :test do 
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'rails-controller-testing'
 end 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
