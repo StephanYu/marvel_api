@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'support/factory_girl'
+require 'faker'
 
 ActiveRecord::Migration.maintain_test_schema!
 

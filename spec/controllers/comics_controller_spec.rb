@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe ComicsController, :type => :controller do
+describe ComicsController do
 
   describe "GET index" do
     it "assigns all comics as @comics" do
-      comics = FactoryGirl.create_list(:comic, 3).reverse
+      comics = create_list(:comic, 3).reverse
       get :index
       expect(assigns(:comics)).to eq(comics)
     end
@@ -12,21 +12,47 @@ RSpec.describe ComicsController, :type => :controller do
 
   describe "GET show" do
     it "assigns the requested comic as @comic" do
-      comic = FactoryGirl.create(:comic)
+      comic = create(:comic)
       get :show, {:id => comic.to_param}
       expect(assigns(:comic)).to eq(comic)
     end
   end
 
   describe "POST search" do 
-    it "assigns all found comics as @comics"
-    it "returns an empty array when nothing is searched"
-    it "returns all comics ordered by the created_at date"
+    context "with valid attributes" do
+      xit "assigns found comics to @comics" do 
+        post :search
+      end
+      xit "returns all comics ordered by the created_at date" do 
+        post :search
+      end
+    end
+
+    context "with invalid attributes" do
+      xit "returns an empty array" do
+        post :search
+        expect(response).to eq([])
+      end
+    end
   end
 
-  describe "POST toggle" do 
-    it "increments the upvote attribute when upvoted"
-    it "increments the downvote attribute when downvoted"
+  describe "POST toggle" do
+    context "with valid attributes" do
+      xit "increments the upvote attribute when upvoted" do 
+        post :toggle
+      end
+      xit "increments the downvote attribute when downvoted" do 
+        post :toggle
+      end
+    end
+    context "with invalid attributes" do 
+      xit "does not increment the upvote attribute" do 
+        post :toggle
+      end
+      xit "does not increment the downvote attribute" do 
+        post :toggle
+      end
+    end
   end
 
 end

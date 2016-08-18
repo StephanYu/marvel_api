@@ -1,9 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Comic, :type => :model do
+describe Comic do
+
+  it { should have_and_belong_to_many(:characters) }
+        
   describe ".search" do
     let!(:comic) do
-      FactoryGirl.create(:comic, title: "The Amazing Spider-Man")
+      create(:comic, title: "The Amazing Spider-Man")
     end
     it "returns comics with a matching title"  do
       expect(Comic.search("Spider-Man").map(&:id).sort).
@@ -14,10 +17,10 @@ RSpec.describe Comic, :type => :model do
 
     context "when the query is for a character" do
       let!(:comic) do
-        FactoryGirl.create(:comic, title: "Superman and friends")
+        create(:comic, title: "Superman and friends")
       end
       let!(:spider_man) do 
-        FactoryGirl.create(:character, name: "Spider-Man")
+        create(:character, name: "Spider-Man")
       end
       before do
         comic.characters << spider_man
