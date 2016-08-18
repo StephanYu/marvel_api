@@ -12,10 +12,10 @@ class ComicsController < ApplicationController
   end
 
   def search 
-    if params[:search].nil?
+    if params[:query].blank?
       @comics = []
     else
-      @comics = Comic.search(params[:search]).order("created_at DESC")
+      @comics = Comic.search(params[:query]).order("created_at DESC")
     end
 
     render json: @comics

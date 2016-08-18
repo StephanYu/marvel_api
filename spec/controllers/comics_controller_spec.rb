@@ -18,19 +18,27 @@ describe ComicsController do
     end
   end
 
-  describe "POST search" do 
+  describe "GET search" do 
+    let(:comic) { create(:comic) }
+    let(:comic_2) { create(:comic) } # created later???
+
     context "with valid attributes" do
       xit "assigns found comics to @comics" do 
-        post :search
+        get :search, :query => comic.title
+        expect(response).to be_ok
+        expect(response.body).to_include(comic)
       end
       xit "returns all comics ordered by the created_at date" do 
-        post :search
+        get :search
+        expect(response).to be_ok
+        expect(response.body).to_include([comic_2, comic])
       end
     end
 
     context "with invalid attributes" do
       xit "returns an empty array" do
-        post :search
+        get :search
+        expect(response).to_not be_ok
         expect(response).to eq([])
       end
     end
