@@ -5,9 +5,7 @@ describe MarvelApiService do
     subject { MarvelApiService.new.fetch_comics }
     
     let(:comic) do
-      create(:comic,
-             title: "Lorna the Jungle Girl (1954) #6"
-             thumbnail: )
+      create(:comic)
     end
 
     it "returns a list of comics" do
