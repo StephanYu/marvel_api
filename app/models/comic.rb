@@ -3,10 +3,12 @@ class Comic < ApplicationRecord
 
   def self.search(search_term)
     # where("title LIKE ?", "%#{search_term}%").
-    results = Comic.
-      includes(:characters).
-      where(["characters.name LIKE ? OR comics.title LIKE ?", "%#{search_term}%", "%#{search_term}%"])
-    results
+    results = 
+      Comic.joins(:characters).
+        where("characters.name LIKE ?", "%#{search_term}%").
+        or(Comic.joins(:characters).where("comics.title LIKE ?", "%#{search_term}%"))
+      # binding.pry
+      results
   end
 
   # comics = Comic.joins("join characters_comics on comic.id = characters_comics.character_id").where(["characters_comics.character_id = ?", character_id])
