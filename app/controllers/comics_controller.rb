@@ -1,5 +1,5 @@
 class ComicsController < ApplicationController
-  before_action :set_comic, only: [:show, :toggle, :update]
+  before_action :set_comic, only: [:show, :vote, :update]
 
   def index
     @comics = Comic.all.order('created_at DESC')
@@ -21,8 +21,8 @@ class ComicsController < ApplicationController
     render json: @comics
   end
 
-  def toggle
-    case params[:comic][:vote_type]
+  def vote
+    case comic_params["vote_type"]
     when 'upvote' 
       @comic.increment!(:upvote)
     when 'downvote'
@@ -38,6 +38,6 @@ class ComicsController < ApplicationController
     end
 
     def comic_params
-      params.require(:comic).permit(:title, :image_url)
+      params.fetch(:comic, {}).permit(:title, :image_url, :vote_type)
     end
 end

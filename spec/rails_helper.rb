@@ -5,8 +5,14 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'support/factory_girl'
 require 'faker'
+require "vcr"
 
 ActiveRecord::Migration.maintain_test_schema!
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/vcr'
+  config.hook_into :webmock
+end
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

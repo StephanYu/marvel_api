@@ -32,8 +32,8 @@ class MarvelApiService
     results          = []
     base_url         = resource.base_url
 
-    # TEMPORARY CHANGE: REMOVE AFTER TESTING!!!!!!!!!!!!!
-    total_page_count = 1
+    # uncomment for testing to reduce API requests!!!
+    # total_page_count = 1
 
     (0..total_page_count).each do |count|
       offset   = results_per_page * count

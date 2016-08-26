@@ -11,12 +11,12 @@ RSpec.describe ComicsController, :type => :routing do
       expect(:get => "/comics/1").to route_to("comics#show", :id => "1")
     end
 
-    it "routes to #edit" do
-      expect(:get => "/comics/1/edit").to route_to("comics#edit", :id => "1")
+    it "routes to #search" do
+      expect(:get => "/comics/search?query=superman").to route_to("comics#search", :query => "superman")
     end
 
-    it "routes to #update" do
-      expect(:put => "/comics/1").to route_to("comics#update", :id => "1")
+    it "routes to #vote" do
+      expect(:post => "/comics/1/vote?comic[vote_type]=upvote").to route_to("comics#vote", comic: { "vote_type" => "upvote" }, id: "1")
     end
   end
 end

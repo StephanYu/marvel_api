@@ -15,6 +15,8 @@ group :development, :test do
   gem 'rspec-rails', '3.5.1'
   gem 'factory_girl_rails'
   gem 'vcr', '3.0.3'
+  gem 'webmock'
+  gem 'timecop'
 end
 
 group :development do

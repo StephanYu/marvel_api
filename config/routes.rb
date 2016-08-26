@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :comics, format: :json do
+  resources :comics, only: [:index, :show], format: :json do
     member do
-      put 'toggle'
+      post 'vote'
     end
 
     collection do 
